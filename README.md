@@ -14,6 +14,13 @@ This repo contains five parts:
 
 Consult the `instructions.md` files in each directory for more details.
 
+## Colab Quickstart
+
+You can try the full workflow on Google Colab using the notebook in
+`colab/Punchline_Training_Colab.ipynb`. Open it directly on Colab and
+follow the cells to install dependencies, prepare the dataset and start
+training.
+
 ## Citation
 
 If you find this work useful, please cite it as follows:
