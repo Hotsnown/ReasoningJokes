@@ -1,12 +1,12 @@
 import jsonlines
-from prompt_utils import generate_next_chapter_messages
+from prompt_utils import generate_punchline_messages
 import numpy as np
 from transformers import AutoTokenizer
 import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="Qwen/Qwen2.5-3B-Instruct")
-parser.add_argument("--dataset_name", type=str, default="FINAL_long_story_noprompt_dataset")
+parser.add_argument("--dataset_name", type=str, default="joke_dataset")
 parser.add_argument("--data_dir", type=str, default="sft_data/")
 args = parser.parse_args()
 
@@ -22,7 +22,7 @@ def get_initial_dataset(split):
     prompts = []
     num_tokens = []
     for datapoint in initial_dataset:
-        messages = generate_next_chapter_messages(datapoint, [])
+        messages = generate_punchline_messages(datapoint)
         
         num_tokens.append(tokenizer.apply_chat_template(messages, tokenize=True, return_tensors="pt").shape[-1])
         prompts.append(

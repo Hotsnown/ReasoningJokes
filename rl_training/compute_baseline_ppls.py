@@ -1,12 +1,12 @@
 import jsonlines
-from prompt_utils import generate_next_chapter_messages, generate_reasoning_from_story_messages
+from prompt_utils import generate_punchline_messages
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from tqdm import tqdm
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--dataset_name", type=str, default="story_dataset")
+parser.add_argument("--dataset_name", type=str, default="joke_dataset")
 parser.add_argument("--model_name", type=str, default="Qwen/Qwen2.5-7B-Instruct-1M")
 parser.add_argument("--nice_model_name", type=str, default="qwen7B")
 args = parser.parse_args()
@@ -67,24 +67,11 @@ def get_perplexity(messages):
 prompt_to_datapoint_with_baseline_ppl = {}
 
 for datapoint in tqdm(all_data):
-    print(f"story_id: {datapoint['story_id']}; chapter_index: {datapoint['chapter_index']}")
-    next_chapter_messages = generate_next_chapter_messages(
-        datapoint,
-        [],
-        USE_SYSTEM_ROLE=True,
-    )
-    
-    reasoning_messages = generate_reasoning_from_story_messages(datapoint, [])
-    
-    reasoning_prompt = tokenizer.apply_chat_template(
-        reasoning_messages, tokenize=False
-    )
-    
-    next_chapter_synopsis = reasoning_prompt.split("### Next Chapter Synopsis: ###")[1].split("###")[0].strip()
-    
-    ppl = get_perplexity(next_chapter_messages)
+    messages = generate_punchline_messages(datapoint)
+    punchline = messages[-1]["content"]
+    ppl = get_perplexity(messages)
     datapoint["baseline_ppl"] = ppl
-    prompt_to_datapoint_with_baseline_ppl[next_chapter_synopsis] = datapoint
+    prompt_to_datapoint_with_baseline_ppl[punchline] = datapoint
     
 import pickle
 

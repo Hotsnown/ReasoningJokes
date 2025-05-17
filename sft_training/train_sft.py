@@ -5,7 +5,7 @@ python train_sft.py
 accelerate launch --config_file deepspeed_zero2.yaml \
     train_sft.py \
     --model_name_or_path Qwen/Qwen2.5-3B-Instruct \
-    --dataset_name long_story_sft \
+    --dataset_name joke_dataset \
     --learning_rate 2.0e-5 \
     --num_train_epochs 3 \
     --per_device_train_batch_size 1 \
@@ -228,8 +228,8 @@ def main(script_args, training_args, model_args):
 
     # Save everything else on main process
     kwargs = {
-        "dataset_name": "ncp_long_story",
-        "tags": ["ncp_long_story"],
+        "dataset_name": "joke_dataset",
+        "tags": ["joke_dataset"],
     }
     if trainer.accelerator.is_main_process:
         trainer.create_model_card(**kwargs)

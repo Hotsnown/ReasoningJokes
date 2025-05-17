@@ -10,10 +10,10 @@ Note: the primary requirements is `TRL`, different installations for your own en
 
 ## Setup Data
 
-First, you need to organize the data for training (you should have already compiled your dataset using the instructions in the `setup_data` directory). We use 
+First, organize your joke data using the instructions in the `setup_data` directory. Then run
 
 ```bash
-python setup_sft_data.py --model_name Qwen/Qwen2.5-3B-Instruct --dataset_name FINAL_long_story_noprompt_dataset --data_dir sft_data/
+python setup_sft_data.py --model_name Qwen/Qwen2.5-3B-Instruct --dataset_name joke_dataset --data_dir sft_data/
 ```
 
 ## Train
