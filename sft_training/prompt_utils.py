@@ -447,6 +447,11 @@ def generate_next_chapter_messages(
         return [user_message, next_chapter_message]
 
 
+def generate_punchline_messages(datapoint):
+    """Return the chat messages for a joke datapoint."""
+    return datapoint["messages"]
+
+
 #########################################
 # stopping criteria
 #########################################
