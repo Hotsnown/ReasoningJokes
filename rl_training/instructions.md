@@ -11,19 +11,7 @@ pip install -e .
 cd ..
 ```
 
-Setup your dataset (use `setup_data/` to recreate our dataset) - we assume you have a jsonl format with the following fields for each element:
-
-- `story_text`: the previous text of the story (we use the previous chapter)
-- `next_chapter`: the next chapter of the story
-- `chapter_index`: the current chapter index i (the next chapter is chapter i+1)
-- `prior_plot_summary`: a summary of the prior plot
-- `high_level_plot_summary`: a high-level summary of the plot
-- `character_sheets`: a dictionary of character sheets (e.g. `{character_name1: character_sheet1, character_name2: character_sheet2}`)
-- `next_chapter_synopsis`: a synopsis of the next chapter
-- `last_n_chapters`: how many previous chapters are included in story text (for correct instruction formatting)
-- `next_chapter_header`: the header of the next chapter (e.g. "Chapter 10: 1979: The Next Chapter", important so the model knows the chapter number and any other information the header might contains)
-
-Many of these fields (except story_text, next_chapter, and next_chapter_header) are optional, and can be controlled by the `include_*` flags in functions in `prompt_utils.py`. The next chapter synopsis is technically optional for testing story generation, but is necessary for training (more details below).
+Setup your dataset (see `setup_data/`) as a JSONL file where each element contains a list of `messages`. The last message should be the assistant's punchline. No additional metadata is required.
 
 We also assume your model's tokenizer has a chat template that supports the system role, but you can use the `USE_SYSTEM_ROLE` flag in `prompt_utils.py` to control this behaviour.
 
